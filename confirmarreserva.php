@@ -18,13 +18,14 @@ include('login.php');
 			$hora_final = $_REQUEST['hora_final'];
 			$recurso = $_REQUEST['id'];
 			
-			$sql1 = "SELECT * FROM `tbl_reserva` WHERE id_recurso = $recurso AND `fecha_reserva` = '$fecha' AND hora_inicio < '$hora_inicio' AND hora_final > '$hora_final';";
+			$sql1 = "SELECT * FROM `tbl_reserva` WHERE id_recurso = $recurso AND `fecha_reserva` = '$fecha' AND hora_inicio <= '$hora_inicio' AND hora_final >= '$hora_final';";
 
 			$datos = mysqli_query($con,$sql1);
 
 			if(mysqli_num_rows($datos)>0) {
 
 			echo "No se puede reservar en esa franja horaria";
+			echo "<br/>";
 			echo "<a href='perfil.php'>Volver al perfil</a>";
 
 			}else{

@@ -19,23 +19,23 @@ $datos0 = mysqli_query($con, $sql0);
 <head>
 	<meta charset="UTF-8">
 	<title>¡Reserva tu recurso!</title>
+	<link rel="stylesheet" href="css/style.css">
 </head>
 	<body>
-	<nav>
-		<?php 
-			echo "Perfil de: ".$nombre_usuario." | <a href='logout.php'>Log Out</a>";
-		?>
-	</nav>
-	<div id="wrapper">
+	<div class="wrapper">
+			<header>
+				<p class="username"><?php echo "Bienvenido ".$nombre_usuario." | <a href='logout.php'>Log Out</a>"; ?></p>
+			</header>
+		<div class="container">
 		<?php
 			$sql = "SELECT * FROM tbl_tipo_recurso  INNER JOIN tbl_recurso ON tbl_tipo_recurso.id_tipo_recurso=tbl_recurso.id_tipo_recurso WHERE tbl_tipo_recurso.id_tipo_recurso=$_REQUEST[recursos] AND tbl_recurso.id_tipo_recurso=$_REQUEST[recursos]";
 			$datos = mysqli_query($con, $sql);
 				if(mysqli_num_rows($datos)>0){
 		?>			
-			<table border class="Celda1">
+			<table border>
 				<tr>
+					<th>Nombre</th>
 					<th>Recurso</th>
-					<th>Imagen</th>
 					<th>Fecha</th>
 					<th>Hora Inicio</th>
 					<th>Hora Final</th>
@@ -48,7 +48,7 @@ $datos0 = mysqli_query($con, $sql0);
 			echo "$prod[nombre_recurso]";
 				$fichero="img/$prod[foto_recurso]";
 				if(file_exists($fichero)){
-				echo "</td><td></p><img src='#'>";
+				echo "</td><td></p><img src='$fichero'>";
 				}
 			echo "<td><input type='date' name='fecha'></td>";
 			echo "<td><select name='hora_inicio'>
@@ -88,7 +88,9 @@ $datos0 = mysqli_query($con, $sql0);
 			mysqli_close($con);
 		?>
 		</form>
-		<p><a href="perfil.php">Volver a mi perfil</a></p>
+		</table>
+		<p><a class="a" href="perfil.php">Volver a mi perfil</a></p>
+		</div>
 	</div>
 	</body>
 </html>

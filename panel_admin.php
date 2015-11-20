@@ -23,52 +23,56 @@ include('sesion.php');
 <body>
 	<div class="wrapper">
 	<header>
-		<p class="username"><?php echo "Bievenido ".$nombre_usuario." | <a href='logout.php'>Log Out</a>"; ?></p>
+		<p class="username"><?php echo "Bienvenido ".$nombre_usuario." | <a href='logout.php'>Log Out</a>"; ?></p>
 	</header>
 	<div class="container">
 	<?php	
 		//Consulta del Recurso
-		$sql = "SELECT * FROM tbl_reserva, tbl_recurso WHERE tbl_reserva.id_recurso=tbl_recurso.id_recurso AND tbl_reserva.id_usuario = $_SESSION[login_user]";
+		$sql = "SELECT * FROM tbl_usuario ORDER BY tipo_usuario";
 		$datos = mysqli_query($con, $sql);
 			if(mysqli_num_rows($datos)>0){
 	?>
-		<table>
+		<table border="1">
 			<tr>
-				<th>Fecha Reserva</th>
-				<th>Nombre Recurso</th>
-				<th>Hora Inicio</th>
-				<th>Hora Final</th>
-				<th>Cancelar reserva</th>
+				<th>id Usuario</th>
+				<th>Nombre</th>
+				<th>Contraseña</th>
+				<th>Tipo usuario</th>
+				<th>Modificar Usuario</th>
+				<th>Borrar Usuario</th>
 			</tr>
 	<?php
 		while($prod = mysqli_fetch_array($datos)) {
-      	echo "<tr><td>";
-      	echo "$prod[fecha_reserva]";
+	 	echo "<tr><td>";
+      	echo "$prod[id_usuario]";
+      	echo "<td>";
+      	echo "$prod[usuario]";
       	echo "</td>";
       	echo "<td>";
-      	echo "$prod[nombre_recurso]";
- 		echo "</td>";
-      	echo "<td>";
-      	echo "$prod[hora_inicio]";
+      	echo "$prod[password]";
 		echo "</td>";
 		echo "<td>";
-      	echo "$prod[hora_final]";
+      	echo "$prod[tipo_usuario]";
 		echo "</td>";
 		echo "<td>";
-		echo "<a href='liberar.php?id=$prod[id_reserva]'><img src='img/eliminar.png'></a>";
-		echo "</td></tr>";
-
+      	echo "<a href='modificar_usuario.php?id=$prod[id_usuario]'><img src='img/modificar.png'></a>";
+		echo "</td>";
+		echo "<td>";
+		echo "<a href='eliminiar_usuario.php?id=$prod[id_usuario]'><img src='img/eliminar.png'></a>";
+		echo "</td>";
 		}   	
 	?>
 	</table>
+	<br/>
+	<a class="a" href="crear_usuario.php">Crear usuario</a>
+	<br/>
 	<?php
 		}else{
 			echo "No hay recursos reservados.";
-			echo "<br/><br/><br/>";
 		}
 		mysqli_close($con);
 	?>
-		<a class="a" href="perfil.php">Volver</a>
+		<p><a class="a" href="perfil.php">Volver</a></p>
 		</div>
 	</div>
 </body>

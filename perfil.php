@@ -28,22 +28,17 @@ $datos = mysqli_query($con, $sql);
 			}
 		}	
 		</script>
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div id="wrapper">
-		<nav>
-			<?php 
-				echo "Bievenido ".$nombre_usuario." | <a href='logout.php'>Log Out</a>";
-			 ?>
-		</nav>
-		<div>
-			<p><a href="misarticulos.php">Mis recursos</a></p>
-			<p><a href="ver_reservas.php">Ver las reservas</a></p>
-		</div>    
-		<div>
+	<div class="wrapper">
+		<header>
+			<p class="username"><?php echo "Bienvenido ".$nombre_usuario." | <a href='logout.php'>Log Out</a>"; ?></p>
+		</header>
+		<div class="container">
 			<form name="reservar" action="reservar.php" method="POST" onSubmit="return avisarBusqueda();">
-		   		<h2 id="tituloReserva">Reservar producto</h2>
-		        <select name="recursos">
+		   		<h1 id="tituloReserva">Reservar recurso</h1>
+		        <select class="formul" name="recursos">
 					<option value="" selected>Selecciona un recurso...</option>
 						<?php
 						include('login.php');
@@ -54,8 +49,27 @@ $datos = mysqli_query($con, $sql);
 						mysqli_close($con);
 						?>
 				</select>
-				<p><input type="submit" value="Buscar"></p>
+				<input class="form2" type="submit" value="Buscar">
 			</form>
+			<?php
+				$con = mysqli_connect('localhost','root','','bd_recursos');
+
+				$sql1 = "SELECT * FROM tbl_usuario WHERE id_usuario = $login_sesion";
+
+				$datos1 = mysqli_query($con, $sql1);
+
+				while ($array = mysqli_fetch_array($datos1)) {
+					if ($array['tipo_usuario'] == 1){
+						echo "<p><a class='a'href='misarticulos.php'>Mis recursos</a></p>";
+						echo "<p><a class='a' href='ver_reservas.php'>Panel de administración de reservas</a></p>";
+						echo "<p><a class='a' href='panel_admin.php'>Panel de administrador de usuarios</a></p>";
+						echo "<p><a class='a' href='#'>Panel de administrador de recursos (No funciona)</a></p>";
+					}else{
+						echo "<p><a class='a' href='ver_reservas.php'>Ver las reservas</a></p>";
+						echo "<p><a class='a' href='misarticulos.php'>Mis recursos</a></p>";
+					}
+				}
+			?>
 		</div>
 	</div>
 </body>
